@@ -3,35 +3,27 @@ use warnings;
 use Time::HiRes qw/gettimeofday tv_interval/;
 
 use constant {
-    ADD       => 0,
-    SUBSTRACT => 1,
-    MULTIPLY  => 2,
-    DIVIDE    => 3,
-    SUM       => 4
-};
-
-my %functions = (
-    ADD() => sub {
+    ADD => sub {
         my $args = shift;
         return $args->[0] + $args->[1];
     },
 
-    SUBSTRACT() => sub {
+    SUBSTRACT => sub {
         my $args = shift;
         return $args->[0] - $args->[1];
     },
 
-    MULTIPLY() => sub {
+    MULTIPLY => sub {
         my $args = shift;
         return $args->[0] * $args->[1];
     },
 
-    DIVIDE() => sub {
+    DIVIDE => sub {
         my $args = shift;
         return $args->[0] / $args->[1];
     },
 
-    SUM()=> sub {
+    SUM => sub {
         my $args = shift;
         my $sum = 0;
 
@@ -41,13 +33,12 @@ my %functions = (
 
         return $sum;
     }
-);
+};
 
 sub evaluate_ast {
     my $ast = shift;
 
-    my $oper = $ast->[0];
-    my $func = $functions{$oper};
+    my $func = $ast->[0];
 
     my @evaluated_args;
 
