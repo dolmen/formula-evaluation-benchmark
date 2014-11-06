@@ -21,19 +21,7 @@ use constant {
 sub evaluate_ast {
     my $ast = shift;
 
-    my $func = $ast->[0];
-
-    my @evaluated_args;
-
-    for ( my $i = 1; $i < @$ast; $i++ ) {
-        if ( ref $ast->[$i] eq 'ARRAY' ) {
-            push @evaluated_args, evaluate_ast( $ast->[$i] );
-        } else {
-            push @evaluated_args, $ast->[$i];
-        }
-    }
-
-    return $func->(@evaluated_args);
+    $ast->[0]->(map { (ref) ? evaluate_ast($_) : $_ } @{$ast}[1..$#$ast])
 }
 
 sub time_ast {
